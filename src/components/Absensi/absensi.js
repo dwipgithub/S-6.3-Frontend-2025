@@ -26,6 +26,9 @@ const Absensi = () => {
   const [apa, setApa] = useState(true);
   const navigate = useNavigate();
   const { CSRFToken } = useCSRFTokenContext();
+  const [tahun, setTahun] = useState(
+    String(Math.max(new Date().getFullYear(), 2025)),
+  );
 
   useEffect(() => {
     refreshToken();
@@ -120,7 +123,7 @@ const Absensi = () => {
 
   const provinsiChangeHandler = (e) => {
     const provinsiId = e.target.value;
-    console.log(e.target);
+    // console.log(e.target);
     setProvinsiId(provinsiId);
     getKabKota(provinsiId);
   };
@@ -132,6 +135,10 @@ const Absensi = () => {
 
   const changeHandlerNamaRs = (event) => {
     setNamaRS(event.target.value);
+  };
+
+  const changeHandlerTahun = (event) => {
+    setTahun(event.target.value);
   };
 
   const Cari = async (e) => {
@@ -147,10 +154,14 @@ const Absensi = () => {
     }
 
     if (namaRS !== "") {
-      parameterAbsensi.namaRS = namaRS;
+      parameterAbsensi.nama = namaRS;
     }
 
-    console.log(parameterAbsensi);
+    if (tahun !== "") {
+      parameterAbsensi.tahun = tahun;
+    }
+
+    // console.log(parameterAbsensi);
 
     try {
       const customConfig = {
@@ -172,15 +183,24 @@ const Absensi = () => {
             .concat(kabKotaId)
             .concat("-")
             .concat(namaRS)
+            .concat("-")
+            .concat(tahun),
         )
       );
 
-      console.log(daftarKabKota);
+      // console.log(daftarKabKota);
       setApa(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  const currentYear = new Date().getFullYear();
+  const startYear = 2025;
+  const years = [];
+  for (let i = startYear; i <= Math.max(currentYear, startYear); i++) {
+    years.push(i);
+  }
 
   return (
     <div
@@ -192,6 +212,25 @@ const Absensi = () => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
+                <div
+                  className="form-floating"
+                  style={{ width: "100%", paddingBottom: "5px" }}
+                >
+                  <select
+                    name="tahun"
+                    id="tahun"
+                    className="form-select"
+                    value={tahun}
+                    onChange={(e) => changeHandlerTahun(e)}
+                  >
+                    {years.map((year) => (
+                      <option key={year} value={year}>
+                        {year}
+                      </option>
+                    ))}
+                  </select>
+                  <label htmlFor="tahun">Tahun</label>
+                </div>
                 <div
                   className="form-floating"
                   style={{ width: "100%", paddingBottom: "5px" }}
