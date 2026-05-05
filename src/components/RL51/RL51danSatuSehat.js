@@ -83,7 +83,7 @@ export default function TabMenu() {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   return (
@@ -219,7 +219,7 @@ function TabOne() {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   const getBulan = async () => {
@@ -350,7 +350,7 @@ function TabOne() {
       };
       const results = await axiosJWT.get(
         "/apisirs6v2/rllimatitiksatu",
-        customConfig
+        customConfig,
       );
 
       const rlLimaTitikSatuDetails = results.data.data.map((value) => {
@@ -360,7 +360,7 @@ function TabOne() {
       setNamaFile(
         "RL51_" +
           rumahSakit.id +
-          "_".concat(String(tahun).concat("-").concat(bulan).concat("-01"))
+          "_".concat(String(tahun).concat("-").concat(bulan).concat("-01")),
       );
       setDataRL(rlLimaTitikSatuDetails);
       setRumahSakit(null);
@@ -1786,7 +1786,7 @@ function TabTwo() {
     },
     (error) => {
       return Promise.reject(error);
-    }
+    },
   );
 
   const getBulan = async () => {
@@ -1905,7 +1905,7 @@ function TabTwo() {
     };
     const results = await axiosJWT.get(
       "/apisirs6v2/rllimatitiksatusatusehat",
-      customConfig
+      customConfig,
     );
     // proses results jika perlu
 
@@ -1929,7 +1929,7 @@ function TabTwo() {
 
     const responseShow = await axiosJWT.get(
       "/apisirs6v2/rllimatitiksatusatusehatpage",
-      config2
+      config2,
     );
 
     const rawData = responseShow.data.data;
@@ -1994,9 +1994,9 @@ function TabTwo() {
 
     setLoading(true);
     try {
-      if (!initialDataLoaded) {
-        await getInitialData(); // hanya dipanggil sekali
-      }
+      // if (!initialDataLoaded) {
+      //   await getInitialData(); // hanya dipanggil sekali
+      // }
       await getPageData(requestedPage, requestedLimit); // dipanggil setiap kali request page
     } catch (error) {
       const detailMessage =
@@ -2047,7 +2047,7 @@ function TabTwo() {
         token,
         rumahSakit.id,
         tahun,
-        bulan
+        bulan,
       );
 
       if (response.status) {
@@ -2077,7 +2077,7 @@ function TabTwo() {
 
       const res = await axiosJWT.get(
         "/apisirs6v2/getMasterumursatusehat",
-        config2
+        config2,
       );
 
       setMasterUmur(res.data.data); // asumsi master umur di res.data.data
@@ -2321,7 +2321,7 @@ function TabTwo() {
                       <td>{item.diagnosis}</td>
                       {masterUmur.map((umur) => {
                         const umurData = item.umur.find(
-                          (u) => u.age_group === umur.name
+                          (u) => u.age_group === umur.name,
                         );
                         return (
                           <React.Fragment key={`${item.icd_10}-${umur.name}`}>
