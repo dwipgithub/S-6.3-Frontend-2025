@@ -2064,7 +2064,7 @@ function TabTwo() {
   };
 
   const fetchData = (newPage) => {
-    getRL(null, newPage, limit);
+    getDataRL(null, newPage, limit);
   };
 
   const getMasterUmur = async () => {
